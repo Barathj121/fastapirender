@@ -2,6 +2,8 @@ from typing import Optional
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from process import read_community_fisherman_data
+
 
 app = FastAPI()
 
@@ -26,3 +28,9 @@ def read_item(item_id: int, q: Optional[str] = None):
 @app.get("/add/{num}")
 def add_five(num: int):
     return {"result": num + 5}
+
+@app.get("/schedule/")
+def get_schedule():
+    allocated_fish_json = read_community_fisherman_data()
+
+    return {"schedule": allocated_fish_json}
